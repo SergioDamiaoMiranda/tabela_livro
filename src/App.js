@@ -1,25 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import TabelaBody from './components/TabelaBody';
+import TabelaFoot from './components/TabelaFoot';
+import TabelaHead from './components/TabelaHead';
+
+class App extends Component {
+  state = {
+    livros: []
+  };
+  componentDidMount() {
+    console.log("++++++ Antes do fetch.")
+    fetch("/api/livros.json")
+      .then(response => response.json())
+      .then(livros => this.setState({ livros }))
+      .catch(function() {
+        console.log("++++++ Erro na requisição fetch.");
+    })
+    .finally(function() {
+      console.log("++++++ Sempre retorna.");
+    });
+  }
+  render () {
+    return (
+      <table className="tabela">
+        <TabelaHead />
+        <TabelaBody livros={ this.state.livros }/>
+        <TabelaFoot qtdLivros={ this.state.livros.length}/>
+      </table>
+    );
+  }
 }
 
 export default App;
