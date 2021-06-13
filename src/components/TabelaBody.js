@@ -1,6 +1,6 @@
 import React from "react"
 
-const TabelaBody = props => (
+const TabelaBody = (props) => (
     <tbody>
         { props.livros.map( ( item, index ) => (
             <tr key={ item.id } >
@@ -8,7 +8,10 @@ const TabelaBody = props => (
                 <td>{ item.titulo }</td>
                 <td>{ item.autor}</td>
                 <td>
-                    <button className="botao remover">Remover</button>
+                    <button className="botao remover" 
+                            onClick={ () => props.removerLinha(item.id)}
+                            id = {item.id}
+                    >Remover</button>
                 </td>
             </tr>
         ))}
